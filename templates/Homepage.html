@@ -63,31 +63,6 @@ body {
     list-style-type:none;
 }
 
-/*#header {
-    -moz-align-items: center;
-    -webkit-align-items: center;
-    -ms-align-items: center;
-    align-items: center;
-    display: -moz-flex;
-    display: -webkit-flex;
-    display: -ms-flex;
-    display: flex;
-    -moz-justify-content: space-between;
-    -webkit-justify-content: space-between;
-    -ms-justify-content: space-between;
-    justify-content: space-between;
-    background: #111111;
-    color: rgba(255, 255, 255, 0.5);
-    cursor: default;
-    height: 3.25rem;
-    left: 0;
-    line-height: 3.25rem;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 10001;
-}*/
-
 header.special {
   text-align: center;
   margin-bottom: 4rem; }
@@ -123,6 +98,9 @@ header.special {
     if(count2 > 0){
       if(count1 > 0){
         alert('PLEASE ONLY SELECT STRATEGY OR RISK APPETITE!');
+      }
+      if(count2 > 1){
+        alert('PLEASE ONLY SELECT ONE RISK APPETITE!');
       }
     }
     else{
@@ -291,8 +269,8 @@ header.special {
           <div class="form-group" style = "font-family: Raleway, Arial, Helvetica, sans-serif">
           <div>
           <h5><font style = "special" color="#17202A">*NO IDEA ABOUT STRATEGY, JUST CHOOSE YOUR RISK APPETITE: 
-            <input style="margin-top: 10px;"class= "single-checkbox" type="checkbox" onclick="checkSelected(this)" name="strategy" value="Low Risk"/> LOW RISK
-            <input style="margin-top: 10px;"class= "single-checkbox" type="checkbox" onclick="checkSelected(this)" name="strategy" value="High Risk"/> HIGH RISK</h5>
+            <input style="margin-left: 10px;"class= "single-checkbox" type="checkbox" onclick="checkSelected(this)" name="strategy" value="Low Risk"/> LOW RISK
+            <input style="margin-left: 10px;"class= "single-checkbox" type="checkbox" onclick="checkSelected(this)" name="strategy" value="High Risk"/> HIGH RISK</h5>
             <!-- <input style="margin-top: 10px;"class= "single-checkbox" type="checkbox" onclick="checkSelected(this)" name="strategy" value="Low Risk"/><h4 style=" font-family: Raleway, Arial, Helvetica, sans-serif;">LOW RISK</h4>
             <input style="margin-top: 10px;"class= "single-checkbox" type="checkbox" onclick="checkSelected(this)" name="strategy" value="High Risk"/><h4 style=" font-family: Raleway, Arial, Helvetica, sans-serif;">HIGH RISK</h4> -->
           <!-- <input type="number" class="form-control" id="investment_value" name="investment_value" placeholder="Minimum is $5000 " min="5000" required/> -->
