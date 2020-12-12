@@ -24,7 +24,7 @@ def fetch_graph_results(strategy_name, investment_per_strategy, stock_symbol_arr
 
     for stock_symbol in stock_symbol_array:
 
-        ts = TimeSeries(key='L7LPZFOTDXED8KS0')
+        ts = TimeSeries(key='U5S90TNHCRTW2NQ2')
         data, meta_data = ts.get_daily_adjusted(stock_symbol)
 
         if meta_data:
@@ -107,92 +107,78 @@ def fetch_graph_results(strategy_name, investment_per_strategy, stock_symbol_arr
 
 @app.route('/stockportfolio', methods=['POST'])
 def generateGraphs():
-    investment_value = request.form['investment_value']
-    investment_strategies = request.form.getlist('strategy')
-    investment_per_strategy = int(investment_value) / len(investment_strategies)
-    waittime = 40
+    amount_money = request.form['investment_value']
+    strategies = request.form.getlist('strategy')
+    investment_per_strategy = int(amount_money) / len(strategies)
 
-    print("Input Investment Value", investment_value)
-    print("Input Investment Strategies", investment_strategies)
+    sleep_time = 37
 
-    ethical_stock_symbol_array = ['AAPL', 'MSFT', 'ADBE']
-    growth_stock_symbol_array = ['FIT', 'GPRO', 'NVDA']
-    index_stock_symbol_array = ['FB', 'AMZN', 'HMC']
-    quality_stock_symbol_array = ['JPM', 'WMT', 'BBY']
-    value_stock_symbol_array = ['TSLA', 'TWTR', 'GOOG']
+    print("Money ready for invest", amount_money)
+    print("Input Investment Strategies", strategies)
+
+    ethical_stock = ['DIS', 'DBX', 'ADBE']
+    growth_stock = ['PFE', 'NIO', 'T']
+    index_stock = ['XOM', 'AMZN', 'HMC']
+    quality_stock = ['JPM', 'AAPL', 'BBY']
+    value_stock = ['BABA', 'TWTR', 'GOOG']
 
     try:
 
         final_graph_results = []
         final_graph_results_detailed = []
 
-        for strategy in investment_strategies:
+        num_of_strategy = len(strategies)
 
-            if strategy == 'Ethical Investing':
-                print("RESULT for Ethical Investing:")
-                graph_results, graph_results_detailed = fetch_graph_results('Ethical Investing', investment_per_strategy, ethical_stock_symbol_array)
+        for strategy in strategies:
 
-                final_graph_results.append(['Ethical Investing', graph_results])
-                final_graph_results_detailed.append(['Ethical Investing', graph_results_detailed])
+            if num_of_strategy == 2:
+                time.sleep(sleep_time)
 
-                print("Graph Result : ", final_graph_results)
-                print("Detailed Graph Result : ", final_graph_results_detailed)
-                print("")
-
+            if strategy == "Ethical Investing":
+                current_stock = ethical_stock
             elif strategy == 'Growth Investing':
-                print("RESULT for Growth Investing:")
-                # Wait for 1 minute before making the API Call
-                time.sleep(waittime)
-                graph_results, graph_results_detailed = fetch_graph_results('Growth Investing', investment_per_strategy, growth_stock_symbol_array)
-
-                final_graph_results.append(['Growth Investing', graph_results])
-                final_graph_results_detailed.append(['Growth Investing', graph_results_detailed])
-
-                print("Graph Result : ", final_graph_results)
-                print("Detailed Graph Result : ", final_graph_results_detailed)
-                print("")
-
+                current_stock = growth_stock
             elif strategy == 'Index Investing':
-                print("RESULT for Index Investing:")
-                # Wait for 1 minute before making the API Call
-                time.sleep(waittime)
-                graph_results, graph_results_detailed = fetch_graph_results('Index Investing', investment_per_strategy, index_stock_symbol_array)
-
-                final_graph_results.append(['Index Investing', graph_results])
-                final_graph_results_detailed.append(['Index Investing', graph_results_detailed])
-
-                print("Graph Result : ", final_graph_results)
-                print("Detailed Graph Result : ", final_graph_results_detailed)
-                print("")
-
+                current_stock = index_stock
             elif strategy == 'Quality Investing':
-                print("RESULT for Quality Investing:")
-                # Wait for 1 minute before making the API Call
-                time.sleep(waittime)
-                graph_results, graph_results_detailed = fetch_graph_results('Quality Investing', investment_per_strategy, quality_stock_symbol_array)
-
-                final_graph_results.append(['Quality Investing', graph_results])
-                final_graph_results_detailed.append(['Quality Investing', graph_results_detailed])
-
-                print("Graph Result : ", final_graph_results)
-                print("Detailed Graph Result : ", final_graph_results_detailed)
-                print("")
-
+                current_stock = quality_stock
             elif strategy == 'Value Investing':
-                print("RESULT for Value Investing:")
-                # Wait for 1 minute before making the API Call
-                time.sleep(waittime)
-                graph_results, graph_results_detailed = fetch_graph_results('Value Investing', investment_per_strategy, value_stock_symbol_array)
+                current_stock = value_stock
 
-                final_graph_results.append(['Value Investing', graph_results])
-                final_graph_results_detailed.append(['Value Investing', graph_results_detailed])
 
-                print("Graph Result : ", final_graph_results)
-                print("Detailed Graph Result : ", final_graph_results_detailed)
-                print("")
+            print("YSYSYS         " + strategy)
 
-        print("Graph Result Length : ", len(final_graph_results))
-        print("Detailed Graph Result Length : ", len(final_graph_results_detailed))
+            if num_of_strategy ==2:
+                time.sleep(sleep_time)
+
+            print("RESULT for" + strategy+":")
+            graph_results, graph_results_detailed = fetch_graph_results(strategy, investment_per_strategy, current_stock)
+
+            final_graph_results.append([strategy, graph_results])
+
+            final_graph_results_detailed.append([strategy, graph_results_detailed])
+
+            print("Graph Result : ", final_graph_results)
+
+            for something in final_graph_results_detailed:
+                print(len(final_graph_results_detailed))
+                for another_thing in something:
+                    print(len(another_thing))
+                    for thing in another_thing:
+                        if type(thing) is list:
+                            
+                            #print(thing[1])
+                            #print(thing[1][1])
+                            price0 = round(thing[1][0][1]*thing[1][0][2],2)
+                            thing[1][0].append(price0)
+                            price1 = round(thing[1][1][1]*thing[1][1][2],2)
+                            thing[1][1].append(price1)
+                            price2 = round(thing[1][2][1]*thing[1][2][2],2)
+                            thing[1][2].append(price2)
+                            print(thing)
+
+
+            # print("Detailed Graph Result : ", final_graph_results_detailed)
 
         if len(final_graph_results) == 1 and len(final_graph_results_detailed) == 1:
             return render_template("Portfolio_One Strategy.html", fgr=final_graph_results, pgrd=final_graph_results_detailed)
@@ -210,4 +196,4 @@ def generateGraphs():
 
 if __name__=='__main__':
     app.secret_key = os.urandom(12)
-    app.run(debug=True, port=3888)
+    app.run(debug=True, port=3000)
