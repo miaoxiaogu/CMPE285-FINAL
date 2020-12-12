@@ -20,22 +20,27 @@
                 <th>Stock We Selected</th>
                 <th>Current Price</th>
                 <th>Num of shares</th>
+                <th>Value of shares</th>
+
             </tr>
             <tr>
-                <td>{{ pgrd[0][1][4][1][0][0] }}</td>
-                <td>$ {{ pgrd[0][1][4][1][0][1] }}</td>
-                <td>{{ pgrd[0][1][4][1][0][2] }}</td>
+                <td align="center">{{ pgrd[0][1][4][1][0][0] }}</td>
+                <td align="center">$ {{ pgrd[0][1][4][1][0][1] }}</td>
+                <td align="center">{{ pgrd[0][1][4][1][0][2] }}</td>
+                <td align="center">$ {{ pgrd[0][1][4][1][0][3] }}</td>
                 
             </tr>
             <tr>
-                <td>{{ pgrd[0][1][4][1][1][0] }}</td>
-                <td>$ {{ pgrd[0][1][4][1][1][1] }}</td>
-                <td>{{ pgrd[0][1][4][1][1][2] }}</td>
+                <td align="center">{{ pgrd[0][1][4][1][1][0] }}</td>
+                <td align="center">$ {{ pgrd[0][1][4][1][1][1] }}</td>
+                <td align="center">{{ pgrd[0][1][4][1][1][2] }}</td>
+                <td align="center">$ {{ pgrd[0][1][4][1][1][3] }}</td>
             </tr>
             <tr>
-                <td>{{ pgrd[0][1][4][1][2][0] }}</td>
-                <td>$ {{ pgrd[0][1][4][1][2][1] }}</td>
-                <td>{{ pgrd[0][1][4][1][2][2] }}</td>
+                <td align="center">{{ pgrd[0][1][4][1][2][0] }}</td>
+                <td align="center">$ {{ pgrd[0][1][4][1][2][1] }}</td>
+                <td align="center">{{ pgrd[0][1][4][1][2][2] }}</td>
+                <td align="center">$ {{ pgrd[0][1][4][1][2][3] }}</td>
             </tr>
         </table>
     </div>  
@@ -109,10 +114,10 @@
         type: 'pie'
     },
     title: {
-        text: 'Num of shares of each company'
+        text: 'Value of Shares of Each Stock'
     },
     tooltip: {
-        pointFormat: '{series.name}: <b>{point.y:.1f}</b>'
+        pointFormat: '{series.name}: $<b>{point.y:.2f}</b>'
     },
     plotOptions: {
         pie: {
@@ -120,7 +125,7 @@
             cursor: 'pointer',
             dataLabels: {
                 enabled: true,
-                format: '<b>{point.name}</b>: {point.y:.1f}',
+                format: '<b>{point.name}</b>: ${point.y:.2f}',
                 style: {
                     color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                 }
@@ -132,15 +137,15 @@
         colorByPoint: true,
         data: [{
             name: '{{ pgrd[0][1][4][1][0][0] }}',
-            y: {{ pgrd[0][1][4][1][0][2] }},
+            y: {{ pgrd[0][1][4][1][0][3] }},
             sliced: true,
             selected: true
         }, {
             name: '{{ pgrd[0][1][4][1][1][0] }}',
-            y: {{ pgrd[0][1][4][1][1][2] }}
+            y: {{ pgrd[0][1][4][1][1][3] }}
         }, {
             name: '{{ pgrd[0][1][4][1][2][0] }}',
-            y: {{ pgrd[0][1][4][1][2][2] }}
+            y: {{ pgrd[0][1][4][1][2][3] }}
         }]
         }]
     });
@@ -152,11 +157,11 @@
 
     },
     title: {
-        text: 'Stock analysis for investment strategies'
+        text: 'Weekly Trend of The Portfolio Value'
     },
-    subtitle: {
-        text: 'Irregular time data'
-    },
+    // subtitle: {
+    //     text: 'Irregular time data'
+    // },
     xAxis: {
         type: 'datetime',
         dateTimeLabelFormats: {
@@ -169,7 +174,7 @@
     },
     yAxis: {
         title: {
-            text: 'Investment Profit/Loss'
+            text: 'Profit Value'
         },
         min: {{ fgr[0][1][0][1] * 0.95 }}
     },
