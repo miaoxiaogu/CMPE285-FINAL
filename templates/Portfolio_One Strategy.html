@@ -52,59 +52,7 @@
     <div class="col-sm-3">
         <div id="line-chart_overall" ></div>
     </div>
-    <!-- <div class="col-6">
-        <div id="pie_chart_stock" ></div>
-    </div>  -->  
-    
-    <!-- <div class="col-6">
-        <div id="stock_per_company_1"></div>
-    </div> -->
-<!-- </div> -->
 <script>
-
-    // Highcharts.chart('pie_chart_stock', {
-    // chart: {
-    //     plotBackgroundColor: null,
-    //     plotBorderWidth: null,
-    //     plotShadow: false,
-    //     type: 'pie'
-    // },
-    // title: {
-    //     text: 'Today\'s Share Price for each company'
-    // },
-    // tooltip: {
-    //     pointFormat: '{series.name}: <b> $ {point.y:.1f}</b>'
-    // },
-    // plotOptions: {
-    //     pie: {
-    //         allowPointSelect: true,
-    //         cursor: 'pointer',
-    //         dataLabels: {
-    //             enabled: true,
-    //             format: '<b>{point.name}</b>: $ {point.y:.1f}',
-    //             style: {
-    //                 color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-    //             }
-    //         }
-    //     }
-    // },
-    // series: [{
-    //     name: 'Stock Price',
-    //     colorByPoint: true,
-    //     data: [{
-    //         name: '{{ pgrd[0][1][4][1][0][0] }}',
-    //         y: {{ pgrd[0][1][4][1][0][1] }},
-    //         sliced: true,
-    //         selected: true
-    //     }, {
-    //         name: '{{ pgrd[0][1][4][1][1][0] }}',
-    //         y: {{ pgrd[0][1][4][1][1][1] }}
-    //     }, {
-    //         name: '{{ pgrd[0][1][4][1][2][0] }}',
-    //         y: {{ pgrd[0][1][4][1][2][1] }}
-    //     }]
-    //     }]
-    // });
 
     Highcharts.chart('pie_chart_shares', {
     chart: {
@@ -153,14 +101,13 @@
     Highcharts.chart('line-chart_overall', {
     chart: {
         type: 'spline'
-        // type:'column'
 
     },
     title: {
         text: 'Weekly Trend of The Portfolio Value'
     },
     // subtitle: {
-    //     text: 'Irregular time data'
+    //     text: 'Five days Value Trend'
     // },
     xAxis: {
         type: 'datetime',
