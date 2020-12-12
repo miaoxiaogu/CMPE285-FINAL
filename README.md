@@ -7,7 +7,7 @@ Growth Investing
 Index Investing
 Quality Investing
 Value Investing
-The engine needs to assign stocks or ETFs for a selected investment strategy. E.g.
+The engine needs to assign stocks or ETFs for a selected investment strategy. 
 
 The suggestion engine will output:
 
@@ -21,7 +21,11 @@ Developed in python using Alpha Vantage API for real-time stock data.
 ## Steps to run the application:
 
 1，Open cmd
+
 2，Navigate to the folder of project
+
 3，Input in cmd：Pip install -r requirements.txt
+
 4，Input in cmd：FLASK_APP=StockPortfolio.py flask run
+
 5，Open web and use Localhost：5000（or other port）to use the engine.
