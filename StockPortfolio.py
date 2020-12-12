@@ -107,6 +107,10 @@ def generateGraphs():
                 current_stock = quality_stock
             elif strategy == 'Value Investing':
                 current_stock = value_stock
+            elif strategy == 'Low Risk':
+                current_stock = ethical_stock
+            elif strategy == 'High Risk':
+                current_stock = index_stock
 
 
             print("YSYSYS         " + strategy)
