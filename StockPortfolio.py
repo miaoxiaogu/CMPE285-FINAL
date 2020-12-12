@@ -13,94 +13,59 @@ message=""
 app = Flask(__name__);
 Bootstrap(app)
 
+api_keys = ["KCTRYLR11PVQT6JJ", "U5S90TNHCRTW2NQ2", "MFTE7USIP2Q5WO5R", "JR6QIK8EY3VBLE9H", "UT78M5WYW4QJS1RR", "PRU63Z5EY37N9OPZ"]
+key_index = 0
+
 @app.route("/")
 def home():
     return render_template("Homepage.html", **locals())
 
 def fetch_graph_results(strategy_name, investment_per_strategy, stock_symbol_array):
-    stock_details = []
-    five_days_history = []
-    investment_per_company = investment_per_strategy / 3
+    stocks_data = {}
+    days = set()
+    investment = investment_per_strategy / len(stock_symbol_array)
 
     for stock_symbol in stock_symbol_array:
-
-        ts = TimeSeries(key='U5S90TNHCRTW2NQ2')
+        # take turns using API key
+        global key_index
+        print ("key_index:" + str(key_index))
+        ts = TimeSeries(key=api_keys[key_index])
+        key_index = (key_index + 1) % len(api_keys)
         data, meta_data = ts.get_daily_adjusted(stock_symbol)
 
+        # successfully retrieve data
         if meta_data:
-
             count = 0
-            for each_entry in data:
-                if count < 5:
-                    stock_details.append(
-                        [strategy_name, stock_symbol, each_entry, data[each_entry]['5. adjusted close']])
-                    five_days_history.append(each_entry)
-                    count = count + 1
+            for day in data:
+                days.add(day)
+                price = data[day]['5. adjusted close']
+                if day in stocks_data.keys():
+                    stocks_data[day].append([strategy_name, stock_symbol, price])
                 else:
+                    stocks_data[day] = []
+                    stocks_data[day].append([strategy_name, stock_symbol, price])
+                count = count + 1
+                if count >= 5:
                     break
 
-    first_day = []
-
-    first_day_history = []
-    second_day_history = []
-    third_day_history = []
-    fourth_day_history = []
-    fifth_day_history = []
-
-    first_day_investment = 0
-    second_day_investment = 0
-    third_day_investment = 0
-    forth_day_investment = 0
-    fifth_day_investment = 0
+    print (sorted(days))
 
     graph_results = []
     graph_results_detailed = []
 
-    for entry in stock_details:
-        if entry[2] == sorted(set(five_days_history))[0]:
-            first_day.append([entry[1], entry[3]])
-            no_of_stocks_per_company = math.floor(investment_per_company / float(entry[3]))
-            first_day_history.append([entry[1], round(float(entry[3]), 2), no_of_stocks_per_company])
-            first_day_investment += no_of_stocks_per_company * float(entry[3])
-
-    graph_results.append([sorted(set(five_days_history))[0], round(first_day_investment, 2)])
-
-    for entry in stock_details:
-
-        if entry[2] == sorted(set(five_days_history))[1]:
-            for company in first_day_history:
-                if company[0] == entry[1]:
-                    second_day_history.append([entry[1], round(float(entry[3]), 2), company[2]])
-                    second_day_investment += (float(entry[3]) * company[2])
-
-        elif entry[2] == sorted(set(five_days_history))[2]:
-            for company in first_day_history:
-                if company[0] == entry[1]:
-                    third_day_history.append([entry[1], round(float(entry[3]), 2), company[2]])
-                    third_day_investment += (float(entry[3]) * company[2])
-
-        elif entry[2] == sorted(set(five_days_history))[3]:
-            for company in first_day_history:
-                if company[0] == entry[1]:
-                    fourth_day_history.append([entry[1], round(float(entry[3]), 2), company[2]])
-                    forth_day_investment += (float(entry[3]) * company[2])
-
-        elif entry[2] == sorted(set(five_days_history))[4]:
-            for company in first_day_history:
-                if company[0] == entry[1]:
-                    fifth_day_history.append([entry[1], round(float(entry[3]), 2), company[2]])
-                    fifth_day_investment += (float(entry[3]) * company[2])
-
-    graph_results.append([sorted(set(five_days_history))[1], round(second_day_investment, 2)])
-    graph_results.append([sorted(set(five_days_history))[2], round(third_day_investment, 2)])
-    graph_results.append([sorted(set(five_days_history))[3], round(forth_day_investment, 2)])
-    graph_results.append([sorted(set(five_days_history))[4], round(fifth_day_investment, 2)])
-
-    graph_results_detailed.append([sorted(set(five_days_history))[0], first_day_history])
-    graph_results_detailed.append([sorted(set(five_days_history))[1], second_day_history])
-    graph_results_detailed.append([sorted(set(five_days_history))[2], third_day_history])
-    graph_results_detailed.append([sorted(set(five_days_history))[3], fourth_day_history])
-    graph_results_detailed.append([sorted(set(five_days_history))[4], fifth_day_history])
+    for day in sorted(days):
+        # loop each of the historical days
+        investment_num = 0
+        stocks = stocks_data[day]
+        plan = []
+        for stock in stocks:
+            symbol = stock[1]
+            price = float(stock[2])
+            share = math.floor(investment / price)
+            investment_num += share * price
+            plan.append([symbol, round(price, 2), share])
+        graph_results.append([day, round(investment_num, 2)])
+        graph_results_detailed.append([day, plan])
 
     return graph_results, graph_results_detailed
 
@@ -110,8 +75,6 @@ def generateGraphs():
     amount_money = request.form['investment_value']
     strategies = request.form.getlist('strategy')
     investment_per_strategy = int(amount_money) / len(strategies)
-
-    sleep_time = 37
 
     print("Money ready for invest", amount_money)
     print("Input Investment Strategies", strategies)
@@ -132,7 +95,7 @@ def generateGraphs():
         for strategy in strategies:
 
             if num_of_strategy == 2:
-                time.sleep(sleep_time)
+                time.sleep(60)
 
             if strategy == "Ethical Investing":
                 current_stock = ethical_stock
@@ -149,7 +112,7 @@ def generateGraphs():
             print("YSYSYS         " + strategy)
 
             if num_of_strategy ==2:
-                time.sleep(sleep_time)
+                time.sleep(60)
 
             print("RESULT for" + strategy+":")
             graph_results, graph_results_detailed = fetch_graph_results(strategy, investment_per_strategy, current_stock)
