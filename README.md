@@ -22,7 +22,7 @@ Developed in python using Alpha Vantage API for real-time stock data.
 
 1，Open cmd
 
-2，Navigate to the folder of project
+2，Navigate to the folder of project,eg: cd desktop/CMPE285-FINAL-main
 
 3，Input in cmd：Pip install -r requirements.txt
 
