@@ -95,7 +95,7 @@ def generateGraphs():
         for strategy in strategies:
 
             if num_of_strategy == 2:
-                time.sleep(60)
+                time.sleep(38)
 
             if strategy == "Ethical Investing":
                 current_stock = ethical_stock
@@ -115,8 +115,8 @@ def generateGraphs():
 
             print("YSYSYS         " + strategy)
 
-            if num_of_strategy ==2:
-                time.sleep(60)
+#             if num_of_strategy ==2:
+#                 time.sleep(60)
 
             print("RESULT for" + strategy+":")
             graph_results, graph_results_detailed = fetch_graph_results(strategy, investment_per_strategy, current_stock)
