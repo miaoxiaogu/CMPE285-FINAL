@@ -20,12 +20,10 @@ Developed in python using Alpha Vantage API for real-time stock data.
 
 ## Steps to run the application:
 
-1，Open cmd
+1，Open cmd and navigate to the folder of project,eg: cd desktop/CMPE285-FINAL-main
 
-2，Navigate to the folder of project,eg: cd desktop/CMPE285-FINAL-main
+2，Input in cmd：Pip install -r preinstall.txt
 
-3，Input in cmd：Pip install -r requirements.txt
+3，Input in cmd：FLASK_APP=StockPortfolio.py flask run
 
-4，Input in cmd：FLASK_APP=StockPortfolio.py flask run
-
-5，Open web and use Localhost：5000（or other port）to use the engine.
+4，Open web and use Localhost：5000（or other port）to use the engine.
