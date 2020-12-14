@@ -108,7 +108,7 @@ def generateGraphs():
             elif strategy == 'Value Investing':
                 current_stock = value_stock
             elif strategy == 'Low Risk':
-                current_stock = index_stock
+                current_stock = value_stock
             elif strategy == 'High Risk':
                 current_stock = growth_stock
 
