@@ -80,7 +80,7 @@ def generateGraphs():
     print("Input Investment Strategies", strategies)
 
     ethical_stock = ['DIS', 'DBX', 'ADBE']
-    growth_stock = ['TSLA', 'ABNB', 'SNOW']
+    growth_stock = ['TSLA', 'ZM', 'SNOW']
     index_stock = ['XOM', 'AMZN', 'HMC']
     quality_stock = ['JPM', 'AAPL', 'BBY']
     value_stock = ['MSFT', 'FB', 'GOOG']
